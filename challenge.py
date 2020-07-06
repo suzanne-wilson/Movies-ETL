@@ -18,7 +18,7 @@
 # Document any assumptions that are being made. Use try-except blocks to account for unforeseen problems that may arise with new data.a
 
 
-# In[83]:
+# In[90]:
 
 
 def etl_pipeline(wiki_movies, kaggle_meta, kaggle_ratings):
@@ -279,31 +279,16 @@ def etl_pipeline(wiki_movies, kaggle_meta, kaggle_ratings):
 
     # get the start_time from time.time()
     start_time = time.time()
-    for data in pd.read_csv(f'{file_dir}\{kaggle_ratings}', chunksize=1000000):
-        print(f'importing rows {rows_imported} to {rows_imported + len(data)}...', end='')
-        data.to_sql(name='ratings', con=engine, if_exists='replace')
-        rows_imported += len(data)
-
-        # add elapsed time to final print out
-        print(f'Done. {time.time() - start_time} total seconds elapsed')
+    movies_with_ratings_df.to_sql(name='movies', con=engine, if_exists='replace')
+ 
+    # add elapsed time to final print out
+    print(f'Done. {time.time() - start_time} total seconds elapsed')
 
 
-# In[ ]:
+# In[91]:
 
 
 etl_pipeline('wikipedia.movies.json', 'movies_metadata.csv', 'ratings.csv')
-
-
-# In[ ]:
-
-
-
-
-
-# In[ ]:
-
-
-
 
 
 # In[ ]:
